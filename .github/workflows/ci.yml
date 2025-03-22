@@ -27,4 +27,3 @@ jobs:
           -project GithubActions/GithubActions.xcodeproj \
           -scheme GithubActions \
           -destination 'platform=iOS Simulator,name=iPhone 16'
-          | xcbeautify --renderer github-actions
