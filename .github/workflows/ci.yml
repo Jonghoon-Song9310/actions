@@ -23,7 +23,8 @@ jobs:
 
     - name: Build and test (Xcode project)
       run: |
-        xcodebuild test \
+        set -o pipefail && xcodebuild build \
           -project GithubActions/GithubActions.xcodeproj \
           -scheme GithubActions \
           -destination 'platform=iOS Simulator,name=iPhone 16'
+          | xcbeautify --renderer github-actions
