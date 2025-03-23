@@ -29,17 +29,10 @@ jobs:
       - name: Clean DerivedData
         run: rm -rf build
 
-      - name: Build for Testing
+      - name: Build
         run: |
-          xcodebuild build-for-testing \
+          xcodebuild test \
             -project GithubActions/GithubActions.xcodeproj \
             -scheme GithubActions \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
             -derivedDataPath build
-
-      - name: Test without Building
-        run: |
-          XCTESTRUN_PATH=$(find build/Build/Products -name '*.xctestrun' | head -n 1)
-          xcodebuild test-without-building \
-            -xctestrun "$XCTESTRUN_PATH" \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1'
