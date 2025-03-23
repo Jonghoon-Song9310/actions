@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   test:
-    name: Build & Test on iOS 18.1 (Xcode 16.1, iPhone 16)
+    name: Build & Test on iOS 18.1 (Xcode 16.1, iPhone 15)
     runs-on: macos-14
 
     steps:
@@ -34,12 +34,12 @@ jobs:
           xcodebuild build-for-testing \
             -project GithubActions/GithubActions.xcodeproj \
             -scheme GithubActions \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4' \
             -derivedDataPath build
 
-      - name: Boot iPhone 16 Simulator
+      - name: Boot iPhone 15 Simulator
         run: |
-          UDID=$(xcrun simctl list devices | grep "iPhone 16 (18.1)" | grep -oE '[A-F0-9-]{36}' | head -n 1)
+          UDID=$(xcrun simctl list devices | grep "iPhone 15 (17.4)" | grep -oE '[A-F0-9-]{36}' | head -n 1)
           if [ -n "$UDID" ]; then
             echo "Booting simulator with UDID: $UDID"
             xcrun simctl boot "$UDID" || true
@@ -53,4 +53,4 @@ jobs:
           XCTESTRUN_PATH=$(find build/Build/Products -name '*.xctestrun' | head -n 1)
           xcodebuild test-without-building \
             -xctestrun "$XCTESTRUN_PATH" \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1'
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4'
