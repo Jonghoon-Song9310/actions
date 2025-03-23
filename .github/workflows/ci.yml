@@ -14,14 +14,14 @@ jobs:
     runs-on: macos-14
 
     env:
-      DESTINATION: platform=iOS Simulator,name=iPhone 15,OS=17.2
+      DESTINATION: platform=iOS Simulator,name=iPhone 16,OS=18.1
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Setup Xcode Version
-      run: sudo xcode-select --switch /Applications/Xcode_15.2.app
+      run: sudo xcode-select --switch /Applications/Xcode_16.1.app
       shell: bash
 
     - name: Build for Testing
@@ -30,9 +30,10 @@ jobs:
         -project GithubActions/GithubActions.xcodeproj \
         -scheme GithubActions \
         -destination "$DESTINATION" \
-        -derivedDataPath build
+        -configuration Debug
     - name: Test without Building
       run: |
         xcodebuild test-without-building \
-        -xctestrun build/Build/Products/*.xctestrun \
-        -destination "$DESTINATION"
+        -scheme GithubActions \
+        -destination "$DESTINATION" \
+        -configuration Debug
