@@ -3,10 +3,13 @@
 name: iOS CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,9 +24,15 @@ jobs:
       with:
         xcode-version: '16.1'
 
-    - name: Build and test (Xcode project)
+    - name: Build for Testing
       run: |
-        set -o pipefail && xcodebuild build \
-          -project GithubActions/GithubActions.xcodeproj \
-          -scheme GithubActions \
-          -destination 'platform=iOS Simulator,name=iPhone 16'
+        xcodebuild build-for-testing \
+        -project GithubActions/GithubActions.xcodeproj \
+        -scheme GithubActions \
+        -destination 'platform=iOS Simulator,name=iPhone 16' \
+          -derivedDataPath build
+    - name: Test without Building
+      run: |
+        xcodebuild test-without-building \
+        -xctestrun build/Build/Products/*.xctestrun \
+        -destination 'platform=iOS Simulator,name=iPhone 16'

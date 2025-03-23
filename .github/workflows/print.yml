@@ -1,0 +1,11 @@
+name: Print
+
+on:
+  push:
+    branches: [ main ]
+jobs:
+  say-hello:
+    runs-on: macos-latest
+    steps:
+    - name: Build and test (Xcode project)          
+      run: echo "Hello, GitHub Actions!"
