@@ -34,6 +34,7 @@ jobs:
     - name: Test without Building
       run: |
         xcodebuild test-without-building \
+        -project GithubActions/GithubActions.xcodeproj \
         -scheme GithubActions \
         -destination "$DESTINATION" \
         -configuration Debug
