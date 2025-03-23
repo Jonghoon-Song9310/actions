@@ -7,5 +7,5 @@ jobs:
   say-hello:
     runs-on: macos-latest
     steps:
-      - name: echo content
-      run: echo "Hello World!"
+      - name: Say Hello
+        run: echo "Hello, GitHub Actions!"
