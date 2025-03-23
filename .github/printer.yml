@@ -1,0 +1,11 @@
+name: Printer
+
+on:
+  push:
+    branches: [main]
+jobs:
+  say-hello:
+    runs-on: macos-latest
+    steps:
+      - name: echo content
+      run: echo "Hello World!"
