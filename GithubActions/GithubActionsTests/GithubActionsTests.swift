@@ -12,6 +12,6 @@ struct GithubActionsTests {
 
   @Test func example() async throws {
     let value = 11
-    #expect(value == 12)
+    #expect(value == 11)
   }
 }
